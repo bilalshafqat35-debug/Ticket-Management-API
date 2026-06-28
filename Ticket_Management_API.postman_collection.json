@@ -1,0 +1,295 @@
+{
+  "info": {
+    "name": "Customer Support Ticket Management API",
+    "description": "Teyzix Core Internship - BE-2 Task. Collection covers Authentication, Ticket Management, Ticket Replies, and Dashboard Statistics APIs.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://127.0.0.1:8000" },
+    { "key": "access_token", "value": "" },
+    { "key": "refresh_token", "value": "" },
+    { "key": "ticket_id", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"testcustomer\",\n    \"email\": \"test@example.com\",\n    \"password\": \"TestPass123!\",\n    \"password2\": \"TestPass123!\",\n    \"role\": \"customer\",\n    \"contact_number\": \"03001234567\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/register/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "register", ""]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"testcustomer\",\n    \"password\": \"TestPass123!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login", ""]
+            }
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"refresh\": \"{{refresh_token}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login/refresh/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login", "refresh", ""]
+            }
+          }
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/auth/profile/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "profile", ""]
+            }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"first_name\": \"Test\",\n    \"last_name\": \"Customer\",\n    \"contact_number\": \"03009998888\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/profile/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "profile", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tickets",
+      "item": [
+        {
+          "name": "Create Ticket",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Unable to login to my account\",\n    \"description\": \"Getting error when I try to login since yesterday.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tickets/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets", ""]
+            }
+          }
+        },
+        {
+          "name": "List Tickets",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/tickets/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets", ""]
+            }
+          }
+        },
+        {
+          "name": "List Tickets - Filter by Status",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/tickets/?status=open",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets", ""],
+              "query": [{ "key": "status", "value": "open" }]
+            }
+          }
+        },
+        {
+          "name": "List Tickets - Search by Title",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/tickets/?search=login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets", ""],
+              "query": [{ "key": "search", "value": "login" }]
+            }
+          }
+        },
+        {
+          "name": "Get Ticket Detail",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/tickets/{{ticket_id}}/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets", "{{ticket_id}}", ""]
+            }
+          }
+        },
+        {
+          "name": "Update Ticket",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Unable to login - updated\",\n    \"description\": \"Updated description with more detail.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tickets/{{ticket_id}}/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets", "{{ticket_id}}", ""]
+            }
+          }
+        },
+        {
+          "name": "Delete Ticket",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/tickets/{{ticket_id}}/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets", "{{ticket_id}}", ""]
+            }
+          }
+        },
+        {
+          "name": "Assign Agent to Ticket",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"assigned_agent\": 2\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tickets/{{ticket_id}}/assign/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets", "{{ticket_id}}", "assign", ""]
+            }
+          }
+        },
+        {
+          "name": "Update Ticket Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"status\": \"in_progress\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tickets/{{ticket_id}}/status/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets", "{{ticket_id}}", "status", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ticket Replies",
+      "item": [
+        {
+          "name": "Add Reply",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"message\": \"We are looking into this issue, please wait.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tickets/replies/{{ticket_id}}/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets", "replies", "{{ticket_id}}", ""]
+            }
+          }
+        },
+        {
+          "name": "View Conversation History",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/tickets/replies/{{ticket_id}}/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tickets", "replies", "{{ticket_id}}", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Get Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/api/dashboard/stats/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "dashboard", "stats", ""]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
