@@ -11,7 +11,7 @@ class TicketSerializer(serializers.ModelSerializer):
         model = Ticket
         fields = (
             'id', 'title', 'description', 'customer', 'customer_name',
-            'assigned_agent', 'agent_name', 'status', 'created_at', 'updated_at'
+            'assigned_agent', 'agent_name', 'status', 'priority', 'created_at', 'updated_at'
         )
         read_only_fields = ('id', 'customer', 'created_at', 'updated_at')
 
@@ -19,7 +19,7 @@ class TicketSerializer(serializers.ModelSerializer):
 class TicketCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
-        fields = ('title', 'description')
+        fields = ('title', 'description', 'priority')
 
 
 class TicketAssignSerializer(serializers.ModelSerializer):
@@ -37,3 +37,9 @@ class TicketStatusSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
         fields = ('status',)
+
+
+class TicketPrioritySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ticket
+        fields = ('priority',)

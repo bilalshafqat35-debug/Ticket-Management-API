@@ -8,7 +8,7 @@ from rest_framework.filters import SearchFilter
 from .models import Ticket
 from .serializers import (
     TicketSerializer, TicketCreateSerializer,
-    TicketAssignSerializer, TicketStatusSerializer
+    TicketAssignSerializer, TicketStatusSerializer, TicketPrioritySerializer
 )
 from .permissions import IsAgentOrAdmin
 
@@ -16,7 +16,7 @@ from .permissions import IsAgentOrAdmin
 class TicketListCreateView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
     filter_backends = [DjangoFilterBackend, SearchFilter]
-    filterset_fields = ['status', 'assigned_agent']
+    filterset_fields = ['status', 'assigned_agent', 'priority']
     search_fields = ['title', 'customer__username']
 
     def get_serializer_class(self):
@@ -58,4 +58,10 @@ class TicketAssignView(generics.UpdateAPIView):
 class TicketStatusView(generics.UpdateAPIView):
     queryset = Ticket.objects.all()
     serializer_class = TicketStatusSerializer
+    permission_classes = (IsAgentOrAdmin,)
+
+
+class TicketPriorityView(generics.UpdateAPIView):
+    queryset = Ticket.objects.all()
+    serializer_class = TicketPrioritySerializer
     permission_classes = (IsAgentOrAdmin,)
