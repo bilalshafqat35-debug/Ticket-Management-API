@@ -13,6 +13,7 @@ Customers can raise support tickets, agents can manage and resolve them, and adm
 - **Ticket Replies** — Threaded conversation history per ticket with timestamps
 - **Search & Filtering** — Filter by status, assigned agent; search by title/customer
 - **Dashboard Statistics** — Total/open/in-progress/resolved/closed ticket counts, active agent count
+- **Ticket Priority Levels** — Low/Medium/High/Urgent priority, settable on creation and updatable by agents/admins
 - **Role-Based Access Control** — Customers see only their tickets, agents see only assigned tickets, admins see everything
 
 ## Tech Stack
@@ -121,8 +122,9 @@ API will be available at `http://127.0.0.1:8000/`
 | DELETE | `/api/tickets/<id>/` | Delete ticket | Authenticated |
 | PATCH | `/api/tickets/<id>/assign/` | Assign an agent to a ticket | Agent/Admin |
 | PATCH | `/api/tickets/<id>/status/` | Update ticket status | Agent/Admin |
+| PATCH | `/api/tickets/<id>/priority/` | Update ticket priority | Agent/Admin |
 
-**Query parameters:** `?status=open`, `?assigned_agent=<id>`, `?search=<keyword>`
+**Query parameters:** `?status=open`, `?priority=high`, `?assigned_agent=<id>`, `?search=<keyword>`
 
 ### Ticket Replies
 
@@ -148,6 +150,10 @@ Authorization: Bearer <access_token>
 ## Testing
 
 A Postman collection (`Ticket_Management_API.postman_collection.json`) is included in this repository, covering all endpoints with example request bodies.
+
+## Bonus Features Implemented
+
+- **Ticket Priority Levels** — Tickets support `low`, `medium`, `high`, and `urgent` priority. Customers can set priority on creation; agents/admins can update it via `/api/tickets/<id>/priority/`. Tickets can also be filtered by priority.
 
 ## Author
 
