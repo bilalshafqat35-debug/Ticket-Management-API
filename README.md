@@ -91,6 +91,12 @@ python manage.py runserver
 
 API will be available at `http://127.0.0.1:8000/`
 
+## Live Deployment
+
+This API is deployed and live at: **https://bilalshaf.pythonanywhere.com/**
+
+> Note: The root URL (`/`) returns a 404 by design — this is a pure REST API with no frontend. Use the endpoints listed below (e.g. `/api/auth/register/`, `/api/tickets/`) directly, or import the Postman collection to test against the live server.
+
 ## User Roles
 
 | Role | Permissions |
